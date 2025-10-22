@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Number Guessing (Very Simple)</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background:#f0f0f0; }
+    .box { max-width: 480px; margin: auto; padding: 20px; background:white; border-radius:8px; }
+    input { width: 80px; padding: 6px; }
+    button { padding: 6px 12px; margin-left: 6px; }
+    #out { margin-top: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Number Guess</h2>
+    <p>1 to 10 – I picked a number. Guess it!</p>
+    <input id="g" type="number" min="1" max="10" />
+    <button id="s">Submit</button>
+    <button id="r" style="margin-left:6px;">New Game</button>
+    <div id="out"></div>
+  </div>
+
+  <script>
+    // Very small logic
+    let target = Math.floor(Math.random() * 10) + 1;
+    const g = document.getElementById('g');
+    const s = document.getElementById('s');
+    const r = document.getElementById('r');
+    const out = document.getElementById('out');
+
+    function newGame() {
+      target = Math.floor(Math.random() * 10) + 1;
+      g.value = '';
+      out.textContent = 'New round. Guess a number 1-10.';
+      g.focus();
+    }
+
+    s.onclick = function () {
+      const val = parseInt(g.value, 10);
+      if (isNaN(val) || val < 1 || val > 10) {
+        out.textContent = 'Please enter a number between 1 and 10.';
+        return;
+      }
+      if (val === target) {
+        out.textContent = 'Correct! The number was ' + target + '.';
+      } else if (val < target) {
+        out.textContent = 'Too low. Try a higher number.';
+      } else {
+        out.textContent = 'Too high. Try a smaller number.';
+      }
+    };
+
+    r.onclick = newGame;
+
+    // Start
+    newGame();
+  </script>
+</body>
+</html>
